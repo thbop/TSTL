@@ -24,6 +24,7 @@
 #include <TSTL/exception>
 
 namespace tstl {
+    // Public
     string::string() {}
     string::string( const char *str ) {
         set_buffer( str );
@@ -32,12 +33,7 @@ namespace tstl {
         set_buffer( str.buffer );
     }
     string::~string() {
-        clear_buffer();
-    }
-
-    void string::clear_buffer() {
-        if ( buffer != nullptr )
-            delete[] buffer;
+        clear();
     }
 
     void string::operator=( const string &other ) {
@@ -71,13 +67,62 @@ namespace tstl {
         return buffer;
     }
 
-    size_t string::size() {
-        return buffer_size - 1;
+    bool string::empty() const {
+        return char_count == 0;
     }
 
+    size_t string::size() const {
+        return char_count;
+    }
+
+    size_t string::length() const {
+        return char_count;
+    }
+
+    void string::reserve( size_t new_capacity ) {
+        if ( new_capacity > capacity() ) {
+            char *new_buffer = new char[new_capacity];
+            memcpy( new_buffer, buffer, buffer_size );
+
+            buffer_size = new_capacity;
+
+            delete[] buffer;
+            buffer = new_buffer;
+        }
+    }
+
+    size_t string::capacity() const {
+        return buffer_size;
+    }
+    
+    void string::shrink_to_fit() {
+        // Remember, char_count does not include the null-terminator
+        if ( buffer_size > char_count + 1 ) {
+            size_t new_buffer_size = char_count + 1;
+            char *new_buffer = new char[new_buffer_size];
+            memcpy( new_buffer, buffer, new_buffer_size );
+
+            buffer_size = new_buffer_size;
+
+            delete[] buffer;
+            buffer = new_buffer;
+        }
+    }
+
+    void string::clear() {
+        if ( buffer != nullptr ) {
+            delete[] buffer;
+            buffer = nullptr;
+            buffer_size = 
+            char_count  = 0;
+        }
+    }
+
+    // Private
     void string::set_buffer( const char *str ) {
-        clear_buffer();
-        buffer_size = strlen( str ) + 1;
+        clear();
+        char_count  = strlen( str );
+        buffer_size = char_count + 1;
 
         buffer = new char[buffer_size];
         strncpy( buffer, str, buffer_size );

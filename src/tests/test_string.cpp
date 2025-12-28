@@ -26,7 +26,16 @@
 int main() {
     tstl::string f = "Hello World!";
 
-    printf( "%s\n", f.c_str() );
+    f.reserve( 50 );
+
+    f.shrink_to_fit();
+
+    printf( "%s %d %d\n", f.c_str(), (int)f.capacity(), (int)f.size() );
+
+    f.clear();
+
+    if ( f.empty() )
+        printf("EMPTY\n");
 
     return 0;
 }

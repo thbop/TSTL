@@ -26,6 +26,8 @@
 #include "string.h"
 
 namespace tstl {
+    // Source: https://en.cppreference.com/w/cpp/string/basic_string.html
+
     class string {
     public:
         string();
@@ -48,14 +50,32 @@ namespace tstl {
         const char *data() const;
         const char *c_str() const;
 
-        size_t size();
+        // TODO
+        // begin(), end(), rbegin(), rend()
+
+        bool empty() const;
+
+        size_t size() const;
+        size_t length() const;
+
+        // TODO
+        // max_size
+
+        void reserve( size_t new_capacity );
+
+        size_t capacity() const;
+
+        void shrink_to_fit();
+
+        void clear();
 
     
     private:
         char *buffer = nullptr;
-        size_t buffer_size = 0;
+        size_t
+            buffer_size = 0,
+            char_count   = 0;
 
-        void clear_buffer();
         void set_buffer( const char *str );
         // void set_buffer( const string &str );
     };

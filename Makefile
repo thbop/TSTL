@@ -1,5 +1,5 @@
 CC = g++
-CCFLAGS = -fdiagnostics-color=always -Wall -std=c++23 -Iinclude
+CCFLAGS = -fdiagnostics-color=always -Wall -std=c++23 -Iinclude -g
 
 SOURCES = $(wildcard src/TSTL/*.cpp)
 OBJECTS = $(patsubst src/TSTL/%.cpp, lib/%.o, $(SOURCES))
@@ -23,5 +23,5 @@ bin/%.exe: src/tests/%.cpp
 	$(CC) $< -o $@ $(CCFLAGS) $(TEST_LDFLAGS)
 
 clean:
-	rm lib/*.o
 	rm bin/*.exe
+	rm lib/*.o
