@@ -128,8 +128,10 @@ namespace tstl {
 
         reserve( size() + count + 1 ); // + 1 for the null-terminator
 
-        size_t move_size = char_count + 1 - index;
-        memmove( buffer + index + count, buffer + index, move_size );
+        size_t
+            move_size  = char_count + 1 - index,
+            move_delta = index + count;
+        memmove( buffer + move_delta, buffer + index, move_size );
         memcpy( buffer + index, str, count );
 
         char_count += count;
@@ -151,6 +153,22 @@ namespace tstl {
             return insert( index, str_copy.c_str() + s_index, count );
         }
         return insert( index, str.c_str() + s_index, count );
+    }
+
+    string &string::erase( size_t index, size_t count ) {
+        size_t
+            remove_count   = tstl_min( count, size() - index ),
+            move_start_pos = index + remove_count,
+            move_count     = size() + 1 - move_start_pos;
+        
+        if ( move_count == 0 )
+            buffer[index] = '\0';
+        else
+            memmove( buffer + index, buffer + move_start_pos, move_count );
+        
+        char_count -= remove_count;
+
+        return *this;
     }
 
     // Private

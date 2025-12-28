@@ -25,6 +25,8 @@
 
 #include "string.h"
 
+#include <TSTL/math>
+
 namespace tstl {
     // Source: https://en.cppreference.com/w/cpp/string/basic_string.html
 
@@ -74,6 +76,7 @@ namespace tstl {
         string &insert( size_t index, const string &str );
         string &insert( size_t index, const string &str, size_t s_index, size_t count );
 
+        string &erase( size_t index, size_t count );
     
     private:
         char *buffer = nullptr;
