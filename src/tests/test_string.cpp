@@ -26,7 +26,9 @@
 int main() {
     tstl::string f = "Hello World!";
     f.erase( 5, 6 );
-    f.insert( 6, f );
+    f.push_back( ' ' );
+    f.insert( 7, f );
+    f.pop_back();
 
     f.reserve( 50 );
     f.shrink_to_fit();

@@ -77,6 +77,9 @@ namespace tstl {
         string &insert( size_t index, const string &str, size_t s_index, size_t count );
 
         string &erase( size_t index, size_t count );
+
+        void push_back( char ch );
+        void pop_back();
     
     private:
         char *buffer = nullptr;

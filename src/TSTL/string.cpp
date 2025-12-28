@@ -171,6 +171,20 @@ namespace tstl {
         return *this;
     }
 
+    void string::push_back( char ch ) {
+        // +1 for new character
+        // +1 for null terminator
+        reserve( size() + 2 );
+
+        buffer[size()] = ch;
+        buffer[size() + 1] = '\0';
+        char_count++;
+    }
+
+    void string::pop_back() {
+        buffer[--char_count] = '\0';
+    }
+
     // Private
     void string::set_buffer( const char *str ) {
         clear();
