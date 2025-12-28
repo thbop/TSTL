@@ -30,6 +30,9 @@ int main() {
     f.insert( 7, f );
     f.pop_back();
 
+    f.insert( f.size(), "Cheese puff" );
+    f.erase( 19, 5 );
+
     f.reserve( 50 );
     f.shrink_to_fit();
 

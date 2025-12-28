@@ -130,8 +130,12 @@ namespace tstl {
 
         size_t
             move_size  = char_count + 1 - index,
-            move_delta = index + count;
-        memmove( buffer + move_delta, buffer + index, move_size );
+            move_pos = index + count;
+        if ( move_size == 1 )
+            buffer[move_pos] = '\0';
+        else
+            memmove( buffer + move_pos, buffer + index, move_size );
+
         memcpy( buffer + index, str, count );
 
         char_count += count;
@@ -161,7 +165,7 @@ namespace tstl {
             move_start_pos = index + remove_count,
             move_count     = size() + 1 - move_start_pos;
         
-        if ( move_count == 0 )
+        if ( move_count == 1 )
             buffer[index] = '\0';
         else
             memmove( buffer + index, buffer + move_start_pos, move_count );
