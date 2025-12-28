@@ -26,8 +26,9 @@
 int main() {
     tstl::string f = "Hello World!";
 
-    f.reserve( 50 );
+    f.insert( 6, f );
 
+    f.reserve( 50 );
     f.shrink_to_fit();
 
     printf( "%s %d %d\n", f.c_str(), (int)f.capacity(), (int)f.size() );

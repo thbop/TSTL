@@ -118,6 +118,41 @@ namespace tstl {
         }
     }
 
+    string &string::insert( size_t index, const char *str ) {
+        return insert( index, str, strlen( str ) );
+    }
+
+    string &string::insert( size_t index, const char *str, size_t count ) {
+        if ( index > char_count )
+            return *this;
+
+        reserve( size() + count + 1 ); // + 1 for the null-terminator
+
+        size_t move_size = char_count + 1 - index;
+        memmove( buffer + index + count, buffer + index, move_size );
+        memcpy( buffer + index, str, count );
+
+        char_count += count;
+
+        return *this;
+    }
+
+    string &string::insert( size_t index, const string &str ) {
+        if ( &str == this ) {
+            string str_copy = str;
+            return insert( index, str_copy.c_str(), str_copy.size() );
+        }
+        return insert( index, str.c_str(), str.size() );
+    }
+
+    string &string::insert( size_t index, const string &str, size_t s_index, size_t count ) {
+        if ( &str == this ) {
+            string str_copy = str;
+            return insert( index, str_copy.c_str() + s_index, count );
+        }
+        return insert( index, str.c_str() + s_index, count );
+    }
+
     // Private
     void string::set_buffer( const char *str ) {
         clear();
