@@ -55,7 +55,19 @@ namespace tstl {
         return buffer[index];
     }
 
-    const char *string::c_str() {
+    char string::front() {
+        return buffer[0];
+    }
+
+    char string::back() {
+        return buffer[size() - 1];
+    }
+    
+    const char *string::data() const {
+        return buffer;
+    }
+
+    const char *string::c_str() const {
         return buffer;
     }
 

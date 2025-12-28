@@ -42,7 +42,11 @@ namespace tstl {
 
         char operator[]( size_t index );
 
-        const char *c_str();
+        char front();
+        char back();
+        
+        const char *data() const;
+        const char *c_str() const;
 
         size_t size();
 
