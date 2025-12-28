@@ -31,9 +31,15 @@ int main() {
     f.pop_back();
 
     f.insert( f.size(), "Cheese puff" );
-    f.erase( 19, 5 );
+    f.erase( 20, 4 );
 
     f.reserve( 50 );
+
+    f.append( 20, 'E' );
+
+    f += " hmm..";
+    f += '.';
+
     f.shrink_to_fit();
 
     printf( "%s %d %d\n", f.c_str(), (int)f.capacity(), (int)f.size() );

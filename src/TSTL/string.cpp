@@ -151,12 +151,12 @@ namespace tstl {
         return insert( index, str.c_str(), str.size() );
     }
 
-    string &string::insert( size_t index, const string &str, size_t s_index, size_t count ) {
+    string &string::insert( size_t index, const string &str, size_t pos, size_t count ) {
         if ( &str == this ) {
             string str_copy = str;
-            return insert( index, str_copy.c_str() + s_index, count );
+            return insert( index, str_copy.c_str() + pos, count );
         }
-        return insert( index, str.c_str() + s_index, count );
+        return insert( index, str.c_str() + pos, count );
     }
 
     string &string::erase( size_t index, size_t count ) {
@@ -187,6 +187,40 @@ namespace tstl {
 
     void string::pop_back() {
         buffer[--char_count] = '\0';
+    }
+
+    string &string::append( size_t count, char ch ) {
+        char *buffer = new char[count + 1];
+        memset( buffer, ch, count );
+        buffer[count] = '\0';
+
+        append( buffer );
+        delete[] buffer;
+
+        return *this;
+    }
+    string &string::append( const char *str ) {
+        return insert( size(), str );
+    }
+    string &string::append( const char *str, size_t count ) {
+        return insert( size(), str, count );
+    }
+    string &string::append( const string &str ) {
+        return insert( size(), str );
+    }
+    string &string::append( const string &str, size_t pos, size_t count ) {
+        return insert( size(), str, pos, count );
+    }
+
+    string &string::operator+=( const string &str ) {
+        return append( str );
+    }
+    string &string::operator+=( char ch ) {
+        push_back( ch );
+        return *this;
+    }
+    string &string::operator+=( const char *str ) {
+        return append( str );
     }
 
     // Private

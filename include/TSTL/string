@@ -74,12 +74,22 @@ namespace tstl {
         string &insert( size_t index, const char *str );
         string &insert( size_t index, const char *str, size_t count );
         string &insert( size_t index, const string &str );
-        string &insert( size_t index, const string &str, size_t s_index, size_t count );
+        string &insert( size_t index, const string &str, size_t pos, size_t count );
 
         string &erase( size_t index, size_t count );
 
         void push_back( char ch );
         void pop_back();
+
+        string &append( size_t count, char ch );
+        string &append( const char *str );
+        string &append( const char *str, size_t count );
+        string &append( const string &str );
+        string &append( const string &str, size_t pos, size_t count );
+
+        string &operator+=( const string &str );
+        string &operator+=( char ch );
+        string &operator+=( const char *str );
     
     private:
         char *buffer = nullptr;
