@@ -315,4 +315,25 @@ namespace tstl {
     void string::set_buffer( const char *str ) {
         set_buffer( str, strlen( str ) );
     }
+
+    // Non-member functions
+    string operator+( const char *a, const string b ) {
+        return string( a ).append( b );
+    }
+    string operator+( string a, const char *b ) {
+        return a.append( b );
+    }
+    string operator+( string &a, const string b ) {
+        return a.append( b );
+    }
+    
+    bool operator==( const char *a, const string b ) {
+        return b.compare( a ) == 0;
+    }
+    bool operator==( const string a, const char *b ) {
+        return a.compare( b ) == 0;
+    }
+    bool operator==( const string a, const string b ) {
+        return a.compare( b ) == 0;
+    }
 }

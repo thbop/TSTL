@@ -44,6 +44,8 @@ int main() {
 
     printf( "%s %d %d\n", f.c_str(), (int)f.capacity(), (int)f.size() );
     printf( "%s\n", f.substr( 13, 6 ).c_str() );
+    printf( "%s\n", ( f + " hi" ).c_str() );
+    printf( "%d\n", f.substr( 0, 6 ) == "Hello!" );
     printf( "%d %d %d\n", f.contains( "Hello" ), f.contains( "Cheese" ), f.contains( "..." ) );
     printf( "%d %d %d\n", !f.contains( "Hello." ), !f.contains( "cheese" ), !f.contains( ".*." ) );
 

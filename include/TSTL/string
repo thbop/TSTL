@@ -126,6 +126,18 @@ namespace tstl {
         void set_buffer( const char *str, size_t count  );
         void set_buffer( const char *str );
     };
+    
+    string operator+( const char *a, const string b );
+    string operator+( string a, const char *b );
+    string operator+( string a, const string b );
+
+    bool operator==( const char *a, const string b );
+    bool operator==( const string a, const char *b );
+    bool operator==( const string a, const string b );
+
+    // TODO
+    // stoi(), stol(), stoll(), stoul(), stoull()
+    // stof(), stod(), stold(), to_string()
 }
 
 #endif
