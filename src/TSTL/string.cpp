@@ -29,15 +29,21 @@ namespace tstl {
     string::string( const char *str ) {
         set_buffer( str );
     }
-    string::string( const string &str ) {
-        set_buffer( str.buffer );
+    string::string( const char *str, size_t count ) {
+        set_buffer( str, count );
+    }
+    string::string( const string& str ) {
+        set_buffer( str.c_str() );
+    }
+    string::string( const string &str, size_t count ) {
+        set_buffer( str.c_str(), count );
     }
     string::~string() {
         clear();
     }
 
     void string::operator=( const string &other ) {
-        set_buffer( other.buffer );
+        set_buffer( other.c_str() );
     }
 
     char string::at( size_t index ) {
@@ -223,13 +229,90 @@ namespace tstl {
         return append( str );
     }
 
+    int string::compare( const string &str ) const {
+        return strncmp( c_str(), str.c_str(), size() );
+    }
+    int string::compare( size_t pos0, size_t count0, const string &str ) const {
+        count0 = count0 > size() - pos0 ? size() - pos0 : count0;
+
+        return strncmp( c_str() + pos0, str.c_str(), count0 );
+    }
+    int string::compare( size_t pos0, size_t count0, const string &str, size_t pos1, size_t count1 ) const {
+        count0 = count0 > size() - pos0 ? size() - pos0 : count0;
+        count1 = count1 > str.size() - pos1 ? str.size() - pos1 : count1;
+
+        // That min function might not be "lore accurate" per se
+        return strncmp( c_str() + pos0, str.c_str() + pos1, tstl_min( count0, count1 ) );
+    }
+    int string::compare( const char *str ) const {
+        return strncmp( c_str(), str, size() );
+    }
+    int string::compare( size_t pos0, size_t count0, const char *str ) const {
+        count0 = count0 > size() - pos0 ? size() - pos0 : count0;
+
+        return strncmp( c_str() + pos0, str, count0 );
+    }
+    int string::compare( size_t pos0, size_t count0, const char *str, size_t pos1, size_t count1 ) const {
+        count0 = count0 > size() - pos0 ? size() - pos0 : count0;
+        size_t str_size = strlen( str );
+        count1 = count1 > str_size - pos1 ? str_size - pos1 : count1;
+
+        // That min function might not be "lore accurate" per se
+        return strncmp( c_str() + pos0, str + pos1, tstl_min( count0, count1 ) );
+    }
+
+    bool string::starts_with( const char *str ) const {
+        return compare( 0, strlen( str ), str ) == 0;
+    }
+    bool string::starts_with( const string &str ) const {
+        return compare( 0, str.size(), str ) == 0;
+    }
+
+    bool string::ends_with( const char *str ) const {
+        size_t str_size = strlen( str );
+        return compare( size() - str_size, str_size, str ) == 0;
+    }
+    bool string::ends_with( const string &str ) const {
+        return compare( size() - str.size(), str.size(), str ) == 0;
+    }
+
+    bool string::contains( char ch ) const {
+        for ( size_t i = 0; i < size(); i++ )
+            if ( buffer[i] == ch )
+                return true;
+        return false;
+    }
+    bool string::contains( const char *str ) const {
+        if ( starts_with( str ) || ends_with( str ) )
+            return true;
+
+        size_t str_size = strlen( str );
+
+        for ( size_t i = 0; i < size() - str_size; i++ )
+            if ( buffer[i] == str[0] && compare( i, str_size, str ) == 0 )
+                return true;
+        
+        return false;
+    }
+    bool string::contains( const string &str ) const {
+        return contains( str.c_str() );
+    }
+
+    string string::substr( size_t pos, size_t count ) const {
+        return string( c_str() + pos, count );
+    }
+
     // Private
-    void string::set_buffer( const char *str ) {
+    void string::set_buffer( const char *str, size_t count ) {
         clear();
-        char_count  = strlen( str );
+        char_count  = count;
         buffer_size = char_count + 1;
 
         buffer = new char[buffer_size];
         strncpy( buffer, str, buffer_size );
+        buffer[char_count] = '\0'; // Ensure string is null-terminated
+    }
+    void string::set_buffer( const char *str ) {
+        set_buffer( str, strlen( str ) );
     }
 }

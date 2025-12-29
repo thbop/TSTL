@@ -34,7 +34,9 @@ namespace tstl {
     public:
         string();
         string( const char *str );
+        string( const char *str, size_t count );
         string( const string &str );
+        string( const string &str, size_t count );
         ~string();
 
         void operator=( const string &other );
@@ -90,6 +92,30 @@ namespace tstl {
         string &operator+=( const string &str );
         string &operator+=( char ch );
         string &operator+=( const char *str );
+
+        // TODO
+        // replace(), copy(), resize(), swap()
+        // find(), rfind(), find_first_of(), find_first_not_of(),
+        // find_last_of(), find_last_not_of()
+
+        int compare( const string &str ) const;
+        int compare( size_t pos0, size_t count0, const string &str ) const;
+        int compare( size_t pos0, size_t count0, const string &str, size_t pos1, size_t count1 ) const;
+        int compare( const char *str ) const;
+        int compare( size_t pos0, size_t count0, const char *str ) const;
+        int compare( size_t pos0, size_t count0, const char *str, size_t pos1, size_t count1 ) const;
+
+        bool starts_with( const char *str ) const;
+        bool starts_with( const string &str ) const;
+
+        bool ends_with( const char *str ) const;
+        bool ends_with( const string &str ) const;
+
+        bool contains( char ch ) const;
+        bool contains( const char *str ) const;
+        bool contains( const string &str ) const;
+
+        string substr( size_t pos, size_t count ) const;
     
     private:
         char *buffer = nullptr;
@@ -97,6 +123,7 @@ namespace tstl {
             buffer_size = 0,
             char_count   = 0;
 
+        void set_buffer( const char *str, size_t count  );
         void set_buffer( const char *str );
     };
 }

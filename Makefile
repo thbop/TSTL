@@ -10,7 +10,7 @@ OUTPUT = lib/libTSTL.a
 
 all: always $(OBJECTS)
 
-test: always clean $(OBJECTS) $(TEST_OUTPUTS)
+test: always $(OBJECTS) $(TEST_OUTPUTS)
 
 always:
 	mkdir -p lib bin
